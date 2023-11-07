@@ -28,15 +28,28 @@ public class Article {
     private Long id;
 
 
-    @Setter
-    private String title;
-    @Setter private String content;
+    @Setter @Column(nullable = false) private String title;
+    @Setter @Column(nullable = false, length = 10000) private String content;
 
     @Setter private String hashtag;
 
-    @CreatedDate private LocalDateTime createdAt;
-    @CreatedBy private String createdBy;
-    @LastModifiedDate private LocalDateTime modifiedAt;
-    @LastModifiedBy private String modifiedBy;
+    @CreatedDate @Column(nullable = false) private LocalDateTime createdAt;
+    @CreatedBy @Column(nullable = false, length = 100) private String createdBy;
+    @LastModifiedDate @Column(nullable = false) private LocalDateTime modifiedAt;
+    @LastModifiedBy @Column(nullable = false, length = 100) private String modifiedBy;
+
+   protected Article() {
+
+   }
+
+   private Article(String title, String content, String hashtag) {
+       this.title = title;
+       this.content = content;
+       this.hashtag = hashtag;
+   }
+
+    public static Article of(String title, String content, String hashtag) {
+        return new Article(title, content, hashtag);
+    }
 
 }
